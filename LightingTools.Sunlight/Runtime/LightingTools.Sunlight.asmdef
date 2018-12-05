@@ -1,0 +1,12 @@
+{
+    "name": "LightingTools.Sunlight",
+    "references": [
+    	"LightingTools.Core",
+    	"Unity.RenderPipelines.HighDefinition.Runtime",
+    	"Unity.RenderPipelines.Core.Runtime"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

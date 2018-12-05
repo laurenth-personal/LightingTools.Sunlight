@@ -1,0 +1,10 @@
+{
+    "name": "li.lightingtools.sunlight",
+    "displayName": "Lighting Tools Sunlight",
+    "version": "0.0.1",
+    "unity": "2018.3",
+    "description": "Lighting tools Sunlight.",
+    "dependencies": { 
+    	"li.lightingtools.core": "0.0.1"
+	}
+}
