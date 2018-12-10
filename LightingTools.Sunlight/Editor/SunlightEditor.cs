@@ -21,8 +21,6 @@ namespace EditorLightUtilities.Sun
         }
 
         public Sunlight sunlight;
-        //SerializedProperty intensityCurve;
-        //SerializedProperty gradient;
         SerializedProperty sunlightParameters;
         SerializedProperty drawGizmo;
         SerializedProperty gizmoSize;
@@ -31,8 +29,6 @@ namespace EditorLightUtilities.Sun
         {
             sunlight = (Sunlight)serializedObject.targetObject;
             sunlightParameters = serializedObject.FindProperty("sunlightParameters");
-            //intensityCurve = serializedObject.FindProperty("sunlightParameters.intensityCurve");
-            //gradient = serializedObject.FindProperty("sunlightParameters.colorGradient");
             drawGizmo = serializedObject.FindProperty("drawGizmo");
             gizmoSize = serializedObject.FindProperty("gizmoSize");
         }

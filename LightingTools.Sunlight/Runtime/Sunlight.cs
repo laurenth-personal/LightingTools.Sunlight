@@ -19,7 +19,7 @@ namespace LightUtilities.Sun
         public bool drawGizmo = true;
         public float gizmoSize = 5;
         public bool showEntities = true;
-        //private float initialTimeOfDay;
+        private SunlightOrientationParameters modifiedOrientationParameters;
 
         [SerializeField]
         [HideInInspector]
@@ -50,13 +50,6 @@ namespace LightUtilities.Sun
             if (sunlight != null) { sunlight.GetComponent<Light>().enabled = false; }
         }
 
-        // Use this for initialization
-        //void Start ()
-        //{
-        //    initialTimeOfDay = sunlightParameters.orientationParameters.timeOfDay;
-        //}
-	
-	    // Update is called once per frame
 	    void Update ()
         {
             GatherOverrides();
@@ -68,20 +61,22 @@ namespace LightUtilities.Sun
 
         private void GatherOverrides()
         {
+            modifiedOrientationParameters = SunlightOrientationParameters.DeepCopy(sunlightParameters.orientationParameters);
+
             if (stack == null)
                 return;
 
             var sunProps = stack.GetComponent<SunlightProperties>();
 
-            if (sunlightParameters.lightParameters == null || sunlightParameters.orientationParameters == null )
+            if (sunlightParameters.lightParameters == null || modifiedOrientationParameters == null )
                 return;
 
             if (sunProps.lattitude.overrideState)
-                sunlightParameters.orientationParameters.lattitude = sunProps.lattitude.value;
+                modifiedOrientationParameters.lattitude = sunProps.lattitude.value;
             if (sunProps.YAxis.overrideState)
-                sunlightParameters.orientationParameters.yAxis = sunProps.YAxis.value;
+                modifiedOrientationParameters.yAxis = sunProps.YAxis.value;
             if (sunProps.timeOfDay.overrideState)
-                sunlightParameters.orientationParameters.timeOfDay = sunProps.timeOfDay.value;
+                modifiedOrientationParameters.timeOfDay = sunProps.timeOfDay.value;
 
             //If overridden intensity is constant, otherwise drive by curve
             if (sunProps.intensity.overrideState)
@@ -166,17 +161,17 @@ namespace LightUtilities.Sun
 
         public void SetSunlightTransform()
         {
-            SetSunlightTransform(sunlightParameters.orientationParameters.timeOfDay);
+            SetSunlightTransform(modifiedOrientationParameters.timeOfDay);
         }
 
         void SetSunlightTransform(float timeOfDay)
         {
             if (sunlightYAxis != null && sunlightLattitude != null && sunlight != null && sunlightParameters != null && sunlightYAxis.transform.parent == gameObject.transform)
             {
-                sunlightYAxis.transform.rotation = Quaternion.Euler(new Vector3(0, sunlightParameters.orientationParameters.yAxis, 0));
-                sunlightLattitude.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180 - sunlightParameters.orientationParameters.lattitude));
+                sunlightYAxis.transform.rotation = Quaternion.Euler(new Vector3(0, modifiedOrientationParameters.yAxis, 0));
+                sunlightLattitude.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 180 - modifiedOrientationParameters.lattitude));
                 sunlightTimeofdayDummy.transform.localRotation = Quaternion.Euler(new Vector3(timeOfDay * 15f + 90, 0, 0));
-                sunlight.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, sunlightParameters.orientationParameters.roll));
+                sunlight.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, modifiedOrientationParameters.roll));
             }
         }
 

@@ -7,8 +7,15 @@ namespace LightUtilities.Sun
     [System.Serializable]
     public class SunlightClipPlayable : PlayableBehaviour
     {
-        public SunlightParameters sunlightParameters;
-        [HideInInspector]
+        public bool overrideYAxis = false;
+        public bool overrideLattitude = false;
+        public bool overrideTimeOfDay = false;
+        public SunlightOrientationParameters orientationParameters;
+        public bool overrideIntensity = false;
+        public float intensity = 1000;
+        public bool overrideColor = false;
+        public Color color;
+
 
         public override void OnGraphStart(Playable playable)
         {

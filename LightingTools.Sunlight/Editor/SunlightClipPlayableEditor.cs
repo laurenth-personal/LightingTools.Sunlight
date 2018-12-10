@@ -6,21 +6,21 @@ namespace EditorLightUtilities.Sun
     [CustomEditor(typeof(SunlightClip))]
     public class SunlightClipPlayableEditor : Editor
     {
-        //public Sunlight sunlight;
-        //SerializedProperty sunlightParameters;
-        //SerializedProperty drawGizmo;
-        //SerializedProperty gizmoSize;
+        SerializedProperty sunlightParameters;
+        SerializedProperty overrideYAxis;
+        SerializedProperty overrideLattitude;
+        SerializedProperty overrideTimeOfDay;
+        SerializedProperty overrideIntensity;
+        SerializedProperty overrideColor;
 
         void OnEnable()
         {
-            /*
-            sunlight = (Sunlight)serializedObject.targetObject;
             sunlightParameters = serializedObject.FindProperty("sunlightParameters");
-            //intensityCurve = serializedObject.FindProperty("sunlightParameters.intensityCurve");
-            //gradient = serializedObject.FindProperty("sunlightParameters.colorGradient");
-            drawGizmo = serializedObject.FindProperty("drawGizmo");
-            gizmoSize = serializedObject.FindProperty("gizmoSize");
-            */
+            overrideYAxis = serializedObject.FindProperty("overrideYAxis");
+            overrideLattitude = serializedObject.FindProperty("overrideLattitude");
+            overrideTimeOfDay = serializedObject.FindProperty("overrideTimeOfDay");
+            overrideIntensity = serializedObject.FindProperty("overrideIntensity");
+            overrideColor = serializedObject.FindProperty("overrideColor");
         }
 
         public override void OnInspectorGUI()
@@ -28,11 +28,18 @@ namespace EditorLightUtilities.Sun
             serializedObject.Update();
             DrawDefaultInspector();
 
+            //EditorGUILayout.PropertyField(overrideYAxis);
+            //EditorGUILayout.PropertyField(overrideLattitude);
+            //EditorGUILayout.PropertyField(overrideTimeOfDay);
+            //EditorGUILayout.PropertyField(overrideIntensity);
+            //EditorGUILayout.PropertyField(overrideColor);
+            //EditorGUILayout.PropertyField(sunlightParameters, true);
+
             /*
             GUILayout.Space(EditorGUIUtility.singleLineHeight);
             EditorGUILayout.LabelField("Default Values", EditorStyles.boldLabel);
 
-            EditorGUILayout.PropertyField(sunlightParameters, true);
+            
 
             LightUIUtilities.DrawSplitter();
             LightUIUtilities.DrawHeader("Visualization");
