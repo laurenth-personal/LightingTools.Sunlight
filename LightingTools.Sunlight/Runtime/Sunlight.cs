@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 
@@ -80,7 +81,7 @@ namespace LightUtilities.Sun
 
             //If overridden intensity is constant, otherwise drive by curve
             if (sunProps.intensity.overrideState)
-                sunlightParameters.lightParameters.intensity = sunProps.intensity;
+                sunlightParameters.lightParameters.intensity = sunProps.intensity.value;
             else if (sunlightParameters.intensityCurve != null)
                 sunlightParameters.lightParameters.intensity = sunlightParameters.intensityCurve.Evaluate(sunlightParameters.orientationParameters.timeOfDay);
             if (sunlightParameters.intensityCurve == null)
@@ -88,18 +89,18 @@ namespace LightUtilities.Sun
 
             //If overridden intensity is constant, otherwise driven by gradient
             if (sunProps.color.overrideState)
-                sunlightParameters.lightParameters.colorFilter = sunProps.color;
+                sunlightParameters.lightParameters.colorFilter = sunProps.color.value;
             else if(sunlightParameters.colorGradient != null)
                 sunlightParameters.lightParameters.colorFilter = sunlightParameters.colorGradient.Evaluate(sunlightParameters.orientationParameters.timeOfDay/24);
 
             if (sunProps.indirectMultiplier.overrideState)
-                sunlightParameters.lightParameters.indirectIntensity = sunProps.indirectMultiplier;
+                sunlightParameters.lightParameters.indirectIntensity = sunProps.indirectMultiplier.value;
             if (sunProps.cookieTexture.overrideState)
-                sunlightParameters.lightParameters.lightCookie = sunProps.cookieTexture;
+                sunlightParameters.lightParameters.lightCookie = sunProps.cookieTexture.value;
             if (sunProps.cookieSize.overrideState)
-                sunlightParameters.lightParameters.cookieSize = sunProps.cookieSize;
+                sunlightParameters.lightParameters.cookieSize = sunProps.cookieSize.value;
             if (sunProps.shadowResolution.overrideState)
-                sunlightParameters.lightParameters.shadowResolution = sunProps.shadowResolution;
+                sunlightParameters.lightParameters.shadowResolution = sunProps.shadowResolution.value;
         }
 
         public void SetLightSettings()
