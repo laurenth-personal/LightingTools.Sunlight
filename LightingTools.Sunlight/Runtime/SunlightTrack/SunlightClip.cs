@@ -21,6 +21,12 @@ namespace LightUtilities.Sun
         {
             base.OnGraphStart(playable);
         }
+
+        public override void OnGraphStop(Playable playable)
+        {
+            overrideIntensity = false;
+            base.OnGraphStop(playable);
+        }
     }
 
     [System.Serializable]

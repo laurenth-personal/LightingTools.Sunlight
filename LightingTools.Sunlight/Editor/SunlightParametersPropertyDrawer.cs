@@ -36,7 +36,9 @@ namespace EditorLightUtilities.Sun
             {
                 EditorGUILayout.PropertyField(property.FindPropertyRelative("intensityCurve"));
                 EditorGUILayout.PropertyField(property.FindPropertyRelative("colorGradient"));
-
+                EditorGUILayout.PropertyField(property.FindPropertyRelative("lightParameters.useColorTemperature"));
+                EditorGUILayout.PropertyField(property.FindPropertyRelative("lightParameters.colorTemperature"));
+                EditorGUILayout.PropertyField(property.FindPropertyRelative("lightParameters.intensity"));
                 EditorGUILayout.PropertyField(property.FindPropertyRelative("lightParameters.mode"), new GUIContent("Light mode / Indirect Intensity"), GUILayout.MaxWidth(EditorGUIUtility.labelWidth + 80));
                 var modeRect = GUILayoutUtility.GetLastRect();
                 var indirectRect = new Rect(modeRect.x + EditorGUIUtility.labelWidth + 100, modeRect.y, position.xMax * 0.3f, EditorGUIUtility.singleLineHeight);

@@ -21,6 +21,7 @@ namespace LightUtilities.Sun
         public float gizmoSize = 5;
         public bool showEntities = true;
         private SunlightOrientationParameters modifiedOrientationParameters;
+        private LightParameters modifiedLightParameters;
 
         [SerializeField]
         [HideInInspector]
@@ -64,6 +65,12 @@ namespace LightUtilities.Sun
         {
             modifiedOrientationParameters = SunlightOrientationParameters.DeepCopy(sunlightParameters.orientationParameters);
 
+            LayerMask defaultLayer =LayerMask.NameToLayer("Default");
+
+            stack = VolumeManager.instance.stack;
+
+            VolumeManager.instance.Update(stack,Camera.main.transform, defaultLayer);
+
             if (stack == null)
                 return;
 
@@ -79,28 +86,30 @@ namespace LightUtilities.Sun
             if (sunProps.timeOfDay.overrideState)
                 modifiedOrientationParameters.timeOfDay = sunProps.timeOfDay.value;
 
-            //If overridden intensity is constant, otherwise drive by curve
+            //If overridden in volumes intensity is constant, otherwise driven by curve * intensity
+            modifiedLightParameters = LightParameters.DeepCopy(sunlightParameters.lightParameters);
+
             if (sunProps.intensity.overrideState)
-                sunlightParameters.lightParameters.intensity = sunProps.intensity.value;
+                modifiedLightParameters.intensity = sunProps.intensity.value;
             else if (sunlightParameters.intensityCurve != null)
-                sunlightParameters.lightParameters.intensity = sunlightParameters.intensityCurve.Evaluate(sunlightParameters.orientationParameters.timeOfDay);
-            if (sunlightParameters.intensityCurve == null)
-                Debug.LogWarning("Sun intensity curve is null");
+                modifiedLightParameters.intensity = sunlightParameters.intensityCurve.Evaluate(sunlightParameters.orientationParameters.timeOfDay) * sunlightParameters.lightParameters.intensity;
+            else if (sunlightParameters.intensityCurve == null)
+                modifiedLightParameters.intensity = sunlightParameters.lightParameters.intensity;
 
             //If overridden intensity is constant, otherwise driven by gradient
             if (sunProps.color.overrideState)
-                sunlightParameters.lightParameters.colorFilter = sunProps.color.value;
-            else if(sunlightParameters.colorGradient != null)
-                sunlightParameters.lightParameters.colorFilter = sunlightParameters.colorGradient.Evaluate(sunlightParameters.orientationParameters.timeOfDay/24);
+                modifiedLightParameters.colorFilter = sunProps.color.value;
+            else if (sunlightParameters.colorGradient != null)
+                modifiedLightParameters.colorFilter = sunlightParameters.colorGradient.Evaluate(sunlightParameters.orientationParameters.timeOfDay / 24);
 
             if (sunProps.indirectMultiplier.overrideState)
-                sunlightParameters.lightParameters.indirectIntensity = sunProps.indirectMultiplier.value;
+                modifiedLightParameters.indirectIntensity = sunProps.indirectMultiplier.value;
             if (sunProps.cookieTexture.overrideState)
-                sunlightParameters.lightParameters.lightCookie = sunProps.cookieTexture.value;
+                modifiedLightParameters.lightCookie = sunProps.cookieTexture.value;
             if (sunProps.cookieSize.overrideState)
-                sunlightParameters.lightParameters.cookieSize = sunProps.cookieSize.value;
+                modifiedLightParameters.cookieSize = sunProps.cookieSize.value;
             if (sunProps.shadowResolution.overrideState)
-                sunlightParameters.lightParameters.shadowResolution = sunProps.shadowResolution.value;
+                modifiedLightParameters.shadowResolution = sunProps.shadowResolution.value;
         }
 
         public void SetLightSettings()
@@ -144,7 +153,7 @@ namespace LightUtilities.Sun
                 sunlight = new GameObject("DirectionalLight");
                 //Init defaults
                 sunlightParameters = new SunlightParameters();
-                sunlightParameters.lightParameters.type = LightType.Directional;
+                sunlightParameters.lightParameters.shape = LightShape.Directional;
             }
 
             sunlight.transform.parent = sunlightTimeofdayDummy.transform;
