@@ -52,10 +52,20 @@ namespace LightUtilities.Sun
             if (sunlight != null) { sunlight.GetComponent<Light>().enabled = false; }
         }
 
-	    void Update ()
-        {
-            GatherOverrides();
 
+        //void Update ()
+        //{
+        //    //GatherOverrides();
+        //    //SetSunlightTransform();
+        //    //SetLightSettings();
+        //}
+
+        private void LateUpdate()
+        {
+            VolumeManager.instance.Update(null, 1);
+            stack = VolumeManager.instance.stack;
+
+            GatherOverrides();
             SetSunlightTransform();
             SetLightSettings();
             ApplyShowFlags(showEntities);
@@ -64,12 +74,6 @@ namespace LightUtilities.Sun
         private void GatherOverrides()
         {
             modifiedOrientationParameters = SunlightOrientationParameters.DeepCopy(sunlightParameters.orientationParameters);
-
-            LayerMask defaultLayer =LayerMask.NameToLayer("Default");
-
-            stack = VolumeManager.instance.stack;
-
-            VolumeManager.instance.Update(stack,Camera.main.transform, defaultLayer);
 
             if (stack == null)
                 return;
@@ -114,7 +118,7 @@ namespace LightUtilities.Sun
 
         public void SetLightSettings()
         {
-            LightingUtilities.ApplyLightParameters(directionalLight, sunlightParameters.lightParameters);
+            LightingUtilities.ApplyLightParameters(directionalLight, modifiedLightParameters);
         }
 
 

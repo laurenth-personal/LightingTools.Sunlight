@@ -46,6 +46,7 @@ namespace EditorLightUtilities.Sun
                 EditorGUILayout.PropertyField(property.FindPropertyRelative("lightParameters.lightCookie"));
                 if (property.FindPropertyRelative("lightParameters.lightCookie").objectReferenceValue != null)
                     EditorGUILayout.PropertyField(property.FindPropertyRelative("lightParameters.cookieSize"));
+                LightUIUtilities.LightLayerMaskDrawer(new GUIContent("Light Layers"), property.FindPropertyRelative("lightParameters.lightLayers"));
             }
 
 
