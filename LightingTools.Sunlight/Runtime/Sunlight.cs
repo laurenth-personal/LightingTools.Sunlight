@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.Experimental.Rendering.HDPipeline;
+using UnityEngine.Rendering.HighDefinition;
 
 namespace LightUtilities.Sun
 {
@@ -29,9 +28,6 @@ namespace LightUtilities.Sun
         [SerializeField]
         [HideInInspector]
         private HDAdditionalLightData additionalLightData;
-        [SerializeField]
-        [HideInInspector]
-        private AdditionalShadowData shadowData;
 
         private VolumeStack stack;
 
@@ -183,8 +179,6 @@ namespace LightUtilities.Sun
             directionalLight =  lightComponent == null ? sunlight.AddComponent<Light>() : lightComponent;
             var additionalDataComponent = sunlight.GetComponent<HDAdditionalLightData>();
             var additionalLightData = additionalDataComponent == null ? sunlight.AddComponent<HDAdditionalLightData>() : additionalDataComponent;
-            var shadowComponent = sunlight.GetComponent<AdditionalShadowData>();
-            var shadowData = shadowComponent == null ? sunlight.AddComponent<AdditionalShadowData>() : shadowComponent;
 
             directionalLight.type = LightType.Directional;
         }
