@@ -21,6 +21,10 @@ namespace LightUtilities.Sun
             SunlightOrientationParameters mixedOrientationParameters = new SunlightOrientationParameters(true);
             float overriddenIntensity = 0;
             Color overriddenColor = Color.black;
+            bool  overrideShadowTint   = false;
+            Color overriddenShadowTint = Color.black;
+            bool  overridePenumbraTint   = false;
+            Color overriddenPenumbraTint = Color.black;
 
             bool overrideYAxis = false;
             bool overrideLattitude = false;
@@ -46,6 +50,10 @@ namespace LightUtilities.Sun
                             var weightedSunlightParameters = SunlightLightingUtilities.LerpSunlightOrientationParameters(neutralOrientationParameters, data.orientationParameters, weight);
                             overriddenIntensity += data.intensity * weight;
                             overriddenColor += data.color * weight;
+                            overrideShadowTint    = overrideShadowTint || data.overrideShadowTint;
+                            overriddenShadowTint += data.shadowTint * weight;
+                            overridePenumbraTint    = overridePenumbraTint || data.overridePenumbraTint;
+                            overriddenPenumbraTint += data.penumbraTint * weight;
 
                             mixedOrientationParameters += weightedSunlightParameters;
 
@@ -86,6 +94,16 @@ namespace LightUtilities.Sun
                 if (overrideColor)
                 {
                     sunprops.color.value = overriddenColor;
+                }
+                sunprops.shadowTint.overrideState = overrideShadowTint;
+                if (overrideShadowTint)
+                {
+                    sunprops.shadowTint.value = overriddenShadowTint;
+                }
+                sunprops.penumbraTint.overrideState = overridePenumbraTint;
+                if (overridePenumbraTint)
+                {
+                    sunprops.penumbraTint.value = overriddenPenumbraTint;
                 }
                 //sunprops.cookieTexture.value = mixedSunlightParameters.lightParameters.lightCookie;
                 //sunprops.cookieSize.value = mixedSunlightParameters.lightParameters.cookieSize;

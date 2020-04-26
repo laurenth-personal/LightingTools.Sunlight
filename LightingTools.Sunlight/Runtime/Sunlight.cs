@@ -52,23 +52,35 @@ namespace LightUtilities.Sun
             if (sunlight != null) { sunlight.GetComponent<Light>().enabled = false; }
         }
 
-
-        //void Update ()
-        //{
-        //    //GatherOverrides();
-        //    //SetSunlightTransform();
-        //    //SetLightSettings();
-        //}
-
         private void LateUpdate()
         {
             VolumeManager.instance.Update(null, 1);
             stack = VolumeManager.instance.stack;
 
-            GatherOverrides();
+            Volume[] volumes = FindObjectsOfType<Volume>();
+            bool sunVolume = false;
+            foreach(Volume volume in volumes)
+            {
+                sunVolume = volume.sharedProfile.Has<SunlightProperties>() ? true : sunVolume;
+            }
+
+            if(sunVolume)
+            {
+                GatherOverrides();
+            }
+            else
+            {
+                ApplyDefaults();
+            }
             SetSunlightTransform();
             SetLightSettings();
             ApplyShowFlags(showEntities);
+        }
+
+        void ApplyDefaults()
+        {
+            modifiedLightParameters = sunlightParameters.lightParameters;
+            modifiedOrientationParameters = sunlightParameters.orientationParameters;
         }
 
         private void GatherOverrides()
@@ -114,6 +126,10 @@ namespace LightUtilities.Sun
                 modifiedLightParameters.cookieSize = sunProps.cookieSize.value;
             if (sunProps.shadowResolution.overrideState)
                 modifiedLightParameters.shadowResolution = sunProps.shadowResolution.value;
+            if (sunProps.shadowTint.overrideState)
+                modifiedLightParameters.shadowTint = sunProps.shadowTint.value;
+            if (sunProps.penumbraTint.overrideState)
+                modifiedLightParameters.penumbraTint = sunProps.penumbraTint.value;
         }
 
         public void SetLightSettings()

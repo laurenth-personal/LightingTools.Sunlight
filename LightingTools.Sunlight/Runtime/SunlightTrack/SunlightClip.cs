@@ -15,6 +15,10 @@ namespace LightUtilities.Sun
         public float intensity = 1000;
         public bool overrideColor = false;
         public Color color;
+        public bool  overrideShadowTint = false;
+        public Color shadowTint = Color.white;
+        public bool  overridePenumbraTint = false;
+        public Color penumbraTint = Color.white;
 
 
         public override void OnGraphStart(Playable playable)
@@ -24,7 +28,6 @@ namespace LightUtilities.Sun
 
         public override void OnGraphStop(Playable playable)
         {
-            overrideIntensity = false;
             base.OnGraphStop(playable);
         }
     }
