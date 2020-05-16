@@ -15,7 +15,7 @@ namespace LightUtilities.Sun
         public TextureParameter cookieTexture = new TextureParameter(null);
         public FloatParameter cookieSize = new FloatParameter(1);
         public IntParameter shadowResolution = new IntParameter(1024);
-        public ColorParameter shadowTint = new ColorParameter(Color.white);
+        public ColorParameter shadowTint = new ColorParameter(Color.black);
         public ColorParameter penumbraTint = new ColorParameter(Color.white);
     }
 }
