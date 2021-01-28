@@ -1,6 +1,6 @@
 using UnityEngine.Playables;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
+using UnityEngine.Rendering;
 
 namespace LightUtilities.Sun
 {
@@ -21,10 +21,14 @@ namespace LightUtilities.Sun
             SunlightOrientationParameters mixedOrientationParameters = new SunlightOrientationParameters(true);
             float overriddenIntensity = 0;
             Color overriddenColor = Color.black;
+            bool  overrideShadowTint   = false;
+            Color overriddenShadowTint = Color.black;
+            bool  overridePenumbraTint   = false;
+            Color overriddenPenumbraTint = Color.black;
 
             bool overrideYAxis = false;
             bool overrideLattitude = false;
-            bool overrideTimeOfDay = false;
+            //bool overrideTimeOfDay = false;
             bool overrideIntensity = false;
             bool overrideColor = false;
 
@@ -46,6 +50,10 @@ namespace LightUtilities.Sun
                             var weightedSunlightParameters = SunlightLightingUtilities.LerpSunlightOrientationParameters(neutralOrientationParameters, data.orientationParameters, weight);
                             overriddenIntensity += data.intensity * weight;
                             overriddenColor += data.color * weight;
+                            overrideShadowTint    = overrideShadowTint || data.overrideShadowTint;
+                            overriddenShadowTint += data.shadowTint * weight;
+                            overridePenumbraTint    = overridePenumbraTint || data.overridePenumbraTint;
+                            overriddenPenumbraTint += data.penumbraTint * weight;
 
                             mixedOrientationParameters += weightedSunlightParameters;
 
@@ -53,8 +61,8 @@ namespace LightUtilities.Sun
                                 overrideYAxis = true;
                             if (data.overrideLattitude)
                                 overrideLattitude = true;
-                            if (data.overrideTimeOfDay)
-                                overrideTimeOfDay = true;
+//                            if (data.overrideTimeOfDay)
+//                                overrideTimeOfDay = true;
                             if (data.overrideIntensity)
                                 overrideIntensity = true;
                             if (data.overrideColor)
@@ -72,11 +80,11 @@ namespace LightUtilities.Sun
                 {
                     sunprops.lattitude.value = mixedOrientationParameters.lattitude;
                 }
-                sunprops.timeOfDay.overrideState = overrideTimeOfDay;
-                if (overrideTimeOfDay)
-                {
-                    sunprops.timeOfDay.value = mixedOrientationParameters.timeOfDay;
-                }
+                //sunprops.timeOfDay.overrideState = overrideTimeOfDay;
+                //if (overrideTimeOfDay)
+                //{
+                //    sunprops.timeOfDay.value = mixedOrientationParameters.timeOfDay;
+                //}
                 sunprops.intensity.overrideState = overrideIntensity;
                 if (overrideIntensity)
                 {
@@ -86,6 +94,16 @@ namespace LightUtilities.Sun
                 if (overrideColor)
                 {
                     sunprops.color.value = overriddenColor;
+                }
+                sunprops.shadowTint.overrideState = overrideShadowTint;
+                if (overrideShadowTint)
+                {
+                    sunprops.shadowTint.value = overriddenShadowTint;
+                }
+                sunprops.penumbraTint.overrideState = overridePenumbraTint;
+                if (overridePenumbraTint)
+                {
+                    sunprops.penumbraTint.value = overriddenPenumbraTint;
                 }
                 //sunprops.cookieTexture.value = mixedSunlightParameters.lightParameters.lightCookie;
                 //sunprops.cookieSize.value = mixedSunlightParameters.lightParameters.cookieSize;
