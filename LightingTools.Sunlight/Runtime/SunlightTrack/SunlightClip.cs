@@ -9,7 +9,8 @@ namespace LightUtilities.Sun
     {
         public bool overrideYAxis = false;
         public bool overrideLattitude = false;
-        public bool overrideTimeOfDay = false;
+        //time of day override not working right now
+        //public bool overrideTimeOfDay = false;
         public SunlightOrientationParameters orientationParameters;
         public bool overrideIntensity = false;
         public float intensity = 1000;

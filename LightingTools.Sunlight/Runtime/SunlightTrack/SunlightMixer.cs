@@ -28,7 +28,7 @@ namespace LightUtilities.Sun
 
             bool overrideYAxis = false;
             bool overrideLattitude = false;
-            bool overrideTimeOfDay = false;
+            //bool overrideTimeOfDay = false;
             bool overrideIntensity = false;
             bool overrideColor = false;
 
@@ -61,8 +61,8 @@ namespace LightUtilities.Sun
                                 overrideYAxis = true;
                             if (data.overrideLattitude)
                                 overrideLattitude = true;
-                            if (data.overrideTimeOfDay)
-                                overrideTimeOfDay = true;
+//                            if (data.overrideTimeOfDay)
+//                                overrideTimeOfDay = true;
                             if (data.overrideIntensity)
                                 overrideIntensity = true;
                             if (data.overrideColor)
@@ -80,11 +80,11 @@ namespace LightUtilities.Sun
                 {
                     sunprops.lattitude.value = mixedOrientationParameters.lattitude;
                 }
-                sunprops.timeOfDay.overrideState = overrideTimeOfDay;
-                if (overrideTimeOfDay)
-                {
-                    sunprops.timeOfDay.value = mixedOrientationParameters.timeOfDay;
-                }
+                //sunprops.timeOfDay.overrideState = overrideTimeOfDay;
+                //if (overrideTimeOfDay)
+                //{
+                //    sunprops.timeOfDay.value = mixedOrientationParameters.timeOfDay;
+                //}
                 sunprops.intensity.overrideState = overrideIntensity;
                 if (overrideIntensity)
                 {

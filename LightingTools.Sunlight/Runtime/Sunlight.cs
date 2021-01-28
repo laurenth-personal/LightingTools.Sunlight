@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.HighDefinition;
+using GameplayIngredients;
 
 namespace LightUtilities.Sun
 {
@@ -57,7 +58,8 @@ namespace LightUtilities.Sun
             bool sunVolume = false;
             foreach(Volume volume in volumes)
             {
-                sunVolume = volume.sharedProfile.Has<SunlightProperties>() ? true : sunVolume;
+                if(volume.sharedProfile != null)
+                    sunVolume = volume.sharedProfile.Has<SunlightProperties>() ? true : sunVolume;
             }
 
             if(sunVolume)
@@ -95,8 +97,10 @@ namespace LightUtilities.Sun
                 modifiedOrientationParameters.lattitude = sunProps.lattitude.value;
             if (sunProps.YAxis.overrideState)
                 modifiedOrientationParameters.yAxis = sunProps.YAxis.value;
-            if (sunProps.timeOfDay.overrideState)
-                modifiedOrientationParameters.timeOfDay = sunProps.timeOfDay.value;
+
+            if(Application.isPlaying)
+                //modifiedOrientationParameters.timeOfDay = Manager.Get<TimeOfDayManager>().timeOfDay;
+                modifiedOrientationParameters.timeOfDay = Globals.GetFloat("TimeOfDay", Globals.Scope.Global);
 
             //If overridden in volumes intensity is constant, otherwise driven by curve * intensity
             modifiedLightParameters = LightParameters.DeepCopy(sunlightParameters.lightParameters);
@@ -170,6 +174,8 @@ namespace LightUtilities.Sun
                 //Init defaults
                 sunlightParameters = new SunlightParameters();
                 sunlightParameters.lightParameters.shape = LightShape.Directional;
+                sunlightParameters.lightParameters.fadeDistance = 10000;
+                sunlightParameters.lightParameters.shadowFadeDistance = 10000;
             }
 
             sunlight.transform.parent = sunlightTimeofdayDummy.transform;

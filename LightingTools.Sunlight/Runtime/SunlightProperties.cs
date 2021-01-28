@@ -8,7 +8,6 @@ namespace LightUtilities.Sun
     {
         public ClampedFloatParameter YAxis = new ClampedFloatParameter(0f, -180f, 180f);
         public ClampedFloatParameter lattitude = new ClampedFloatParameter(0f, -90f, 90f);
-        public ClampedFloatParameter timeOfDay = new ClampedFloatParameter(10f, 0f, 24f);
         public FloatParameter intensity = new FloatParameter(1000);
         public FloatParameter indirectMultiplier = new FloatParameter(1);
         public ColorParameter color = new ColorParameter(Color.white);
