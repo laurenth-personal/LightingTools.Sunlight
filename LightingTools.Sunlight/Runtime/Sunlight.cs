@@ -51,10 +51,13 @@ namespace LightUtilities.Sun
 
         private void LateUpdate()
         {
+            if(Globals.HasFloat("TimeOfDay",Globals.Scope.Global))
+                modifiedOrientationParameters.timeOfDay = Globals.GetFloat("TimeOfDay", Globals.Scope.Global);
+
             VolumeManager.instance.Update(null, 1);
             stack = VolumeManager.instance.stack;
 
-            Volume[] volumes = FindObjectsOfType<Volume>();
+            Volume[] volumes = FindObjectsByType<Volume>(FindObjectsSortMode.None);
             bool sunVolume = false;
             foreach(Volume volume in volumes)
             {
@@ -97,10 +100,6 @@ namespace LightUtilities.Sun
                 modifiedOrientationParameters.lattitude = sunProps.lattitude.value;
             if (sunProps.YAxis.overrideState)
                 modifiedOrientationParameters.yAxis = sunProps.YAxis.value;
-
-            if(Application.isPlaying)
-                //modifiedOrientationParameters.timeOfDay = Manager.Get<TimeOfDayManager>().timeOfDay;
-                modifiedOrientationParameters.timeOfDay = Globals.GetFloat("TimeOfDay", Globals.Scope.Global);
 
             //If overridden in volumes intensity is constant, otherwise driven by curve * intensity
             modifiedLightParameters = LightParameters.DeepCopy(sunlightParameters.lightParameters);

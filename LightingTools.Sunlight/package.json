@@ -1,11 +1,11 @@
 {
   "name": "com.laurenth.lightingtools-sunlight",
   "displayName": "Lighting Tools Sunlight",
-  "version": "2019.3.0",
-  "unity": "2019.3",
+  "version": "6000.0.1",
+  "unity": "6000.0",
   "description": "Lighting tools Sunlight.",
   "dependencies": {
-    "com.laurenth.lightingtools-core": "2019.3.0",
+    "com.laurenth.lightingtools-core": "6000.0.1",
     "net.peeweek.gameplay-ingredients": "2019.3.0"
   }
 }
