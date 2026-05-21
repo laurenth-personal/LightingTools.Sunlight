@@ -1,5 +1,6 @@
 {
     "name": "LightingTools.Sunlight.Editor",
+    "rootNamespace": "",
     "references": [
         "LightingTools.Core",
         "LightingTools.Core.Editor",
@@ -17,6 +18,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.render-pipelines.high-definition",
+            "expression": "4.2.0",
+            "define": "HDRP"
+        }
+    ],
     "noEngineReferences": false
 }
